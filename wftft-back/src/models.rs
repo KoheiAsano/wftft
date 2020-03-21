@@ -21,3 +21,12 @@ impl<'a> Article {
         }
     }
 }
+
+// POSTを受け取るよう
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+pub struct NewArticle {
+    pub author: String,
+    pub created: Option<DateTime<Utc>>,
+    pub content: String,
+    pub published: bool,
+}
