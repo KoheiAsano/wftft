@@ -28,15 +28,18 @@ async fn main() -> std::io::Result<()> {
     let mut server = HttpServer::new(|| {
         App::new()
             .data(Pool::new())
-            .route("/api/users", web::get().to(handlers::getAllUsers))
-            .route("/api/users/{user_id}", web::get().to(handlers::getUserById))
-            .route("/api/articles", web::get().to(handlers::getAllArticles))
+            .route("/api/users", web::get().to(handlers::get_all_users))
+            .route(
+                "/api/users/{user_id}",
+                web::get().to(handlers::get_user_by_id),
+            )
+            .route("/api/articles", web::get().to(handlers::get_all_articles))
             .route(
                 "/api/articles/{article_id}",
-                web::get().to(handlers::getArticleById),
+                web::get().to(handlers::get_article_by_id),
             )
-            .route("/api/signin", web::post().to(handlers::registerUser))
-            .route("/api/write", web::post().to(handlers::writeArticle))
+            .route("/api/signin", web::post().to(handlers::register_user))
+            .route("/api/write", web::post().to(handlers::write_article))
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {

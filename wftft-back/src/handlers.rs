@@ -2,26 +2,29 @@ use super::models::{Article, NewArticle, NewUser, User};
 use super::Pool;
 use actix_web::{web, HttpResponse, Result};
 // GET
-pub async fn getAllUsers(_pool: web::Data<Pool>) -> Result<HttpResponse> {
+pub async fn get_all_users(_pool: web::Data<Pool>) -> Result<HttpResponse> {
     let user = User::new(1, "asako");
 
     Ok(HttpResponse::Ok().json(user))
 }
 
-pub async fn getUserById(_pool: web::Data<Pool>, uid: web::Path<(i32,)>) -> Result<HttpResponse> {
+pub async fn get_user_by_id(
+    _pool: web::Data<Pool>,
+    uid: web::Path<(i32,)>,
+) -> Result<HttpResponse> {
     info!("{:?}", uid);
     let user = User::new(1, "asako");
 
     Ok(HttpResponse::Ok().json(user))
 }
 
-pub async fn getAllArticles(_pool: web::Data<Pool>) -> Result<HttpResponse> {
+pub async fn get_all_articles(_pool: web::Data<Pool>) -> Result<HttpResponse> {
     let article = Article::new(1, "asako", "turedure");
 
     Ok(HttpResponse::Ok().json(article))
 }
 
-pub async fn getArticleById(
+pub async fn get_article_by_id(
     _pool: web::Data<Pool>,
     aid: web::Path<(i32,)>,
 ) -> Result<HttpResponse> {
@@ -33,7 +36,7 @@ pub async fn getArticleById(
 }
 
 // POST
-pub async fn registerUser(
+pub async fn register_user(
     _pool: web::Data<Pool>,
     newuser: web::Json<NewUser>,
 ) -> Result<HttpResponse> {
@@ -41,7 +44,7 @@ pub async fn registerUser(
     Ok(HttpResponse::Accepted().finish())
 }
 
-pub async fn writeArticle<'a>(
+pub async fn write_article<'a>(
     _pool: web::Data<Pool>,
     newarticle: web::Json<NewArticle>,
 ) -> Result<HttpResponse> {
