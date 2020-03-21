@@ -19,7 +19,7 @@ articles {
 ## API
 
 ### GET
-全ユーザー
+(GET) 全ユーザーを取得
 ```
 /api/users
 ```
@@ -43,7 +43,7 @@ articles {
 ]
 ```
 
-ある記事
+(GET) ユーザーをIdで取得
 ```
 /api/users/{user-id}
 ```
@@ -60,7 +60,7 @@ articles {
 ]
 ```
 
-全記事
+(GET) 全記事取得
 ```
 /api/articles
 ```
@@ -84,7 +84,7 @@ articles {
 ]
 ```
 
-ある記事
+(GET) IDで記事を取得
 ```
 /api/articles/{article-id}
 ```
@@ -101,7 +101,7 @@ articles {
 ]
 ```
 
-ある書き主の記事を
+(GET) ある書き主の記事を全て取得
 ```
 /api/user-articles/{user-id}
 ```
@@ -143,3 +143,17 @@ articles {
 }
 ```
 
+
+## API テスト
+GET
+```bash
+curl localhost:3000/api/users
+curl localhost:3000/api/users/123
+curl localhost:3000/api/articles
+curl localhost:3000/api/articles/111
+```
+POST
+```bash
+curl -X POST localhost:3000/api/write -H "Content-Type:application/json" -d "{\"author\":\"asako\", \"content\":\"ukiyoni\", \"published\":false}"
+curl -X POST localhost:3000/api/signin -H "Content-Type:application/json" -d "{\"name\":\"asako\", \"id\":123}"
+```
