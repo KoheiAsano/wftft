@@ -1,18 +1,18 @@
-use super::models::{Article, NewArticle};
+use super::models::{Article, NewArticle, NewUser, User};
 use super::Pool;
 use actix_web::{web, HttpResponse, Result};
 // GET
 pub async fn getAllUsers(_pool: web::Data<Pool>) -> Result<HttpResponse> {
-    let article = Article::new(1, "asako", "turedure");
+    let user = User::new(1, "asako");
 
-    Ok(HttpResponse::Ok().json(article))
+    Ok(HttpResponse::Ok().json(user))
 }
 
 pub async fn getUserById(_pool: web::Data<Pool>, uid: web::Path<(i32,)>) -> Result<HttpResponse> {
     info!("{:?}", uid);
-    let article = Article::new(1, "asako", "turedure");
+    let user = User::new(1, "asako");
 
-    Ok(HttpResponse::Ok().json(article))
+    Ok(HttpResponse::Ok().json(user))
 }
 
 pub async fn getAllArticles(_pool: web::Data<Pool>) -> Result<HttpResponse> {
@@ -33,7 +33,11 @@ pub async fn getArticleById(
 }
 
 // POST
-pub async fn registerUser(_pool: web::Data<Pool>) -> Result<HttpResponse> {
+pub async fn registerUser(
+    _pool: web::Data<Pool>,
+    newuser: web::Json<NewUser>,
+) -> Result<HttpResponse> {
+    println!("{:?}", newuser);
     Ok(HttpResponse::Accepted().finish())
 }
 

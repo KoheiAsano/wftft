@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-// 返り値で使う記事型
+// for response
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
 pub struct Article {
     pub id: i32,
@@ -21,12 +21,31 @@ impl<'a> Article {
         }
     }
 }
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+pub struct User {
+    pub id: i32,
+    pub name: String,
+}
+impl<'a> User {
+    pub fn new(id: i32, name: &'a str) -> User {
+        User {
+            id,
+            name: String::from(name),
+        }
+    }
+}
 
-// POSTを受け取るよう
+// for requeset
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
 pub struct NewArticle {
     pub author: String,
     pub created: Option<DateTime<Utc>>,
     pub content: String,
     pub published: bool,
+}
+
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+pub struct NewUser {
+    pub id: i32,
+    pub name: String,
 }
