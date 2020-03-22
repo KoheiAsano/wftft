@@ -3,6 +3,7 @@ extern crate log;
 #[macro_use]
 extern crate diesel;
 use actix_web::{web, App, HttpServer};
+use dotenv::dotenv;
 use listenfd::ListenFd;
 use log::info;
 use simple_logger;
@@ -14,6 +15,7 @@ mod schema;
 pub(crate) type Pool = diesel::r2d2::Pool<diesel::r2d2::ConnectionManager<diesel::PgConnection>>;
 
 pub fn init_pool() -> Pool {
+    dotenv().ok();
     let db_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set.");
     let manager = diesel::r2d2::ConnectionManager::<diesel::PgConnection>::new(db_url);
     diesel::r2d2::Pool::builder()
