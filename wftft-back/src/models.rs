@@ -48,7 +48,6 @@ pub struct RawArticle {
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize)]
 pub struct RawUser {
-    pub id: i32,
     pub name: String,
 }
 
