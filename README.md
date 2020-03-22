@@ -1,5 +1,9 @@
 Wiki For The First Time
 
+## trello
+レベルの低いわからないこととTODO管理
+https://trello.com/b/3zrHCgpI/wftft
+
 ## DB
 
 ```
