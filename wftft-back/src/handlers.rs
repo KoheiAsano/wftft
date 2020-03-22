@@ -1,38 +1,49 @@
 use super::models::{Article, NewArticle, NewUser, RawArticle, RawUser, User};
-use super::schema;
 use super::Pool;
 use actix_web::{web, HttpResponse, Result};
 use diesel::prelude::*;
 // GET
-pub async fn get_all_users(_pool: web::Data<Pool>) -> Result<HttpResponse> {
-    let user = User::new(1, "asako");
+pub async fn get_all_users(pool: web::Data<Pool>) -> Result<HttpResponse> {
+    use crate::schema::users::dsl;
+    let conn = pool.get().expect("Failed to get connection from Pool");
+    let all_users = dsl::users
+        .load::<User>(&conn)
+        .expect("Error during loading users");
+
+    Ok(HttpResponse::Ok().json(all_users))
+}
+
+pub async fn get_user_by_id(pool: web::Data<Pool>, uid: web::Path<(i64,)>) -> Result<HttpResponse> {
+    use crate::schema::users::dsl;
+    let conn = pool.get().expect("Failed to get connection from Pool");
+    let user = dsl::users
+        .filter(dsl::id.eq(uid.0))
+        .load::<User>(&conn)
+        .expect("Error during loading user by Id");
 
     Ok(HttpResponse::Ok().json(user))
 }
 
-pub async fn get_user_by_id(
-    _pool: web::Data<Pool>,
-    uid: web::Path<(i32,)>,
-) -> Result<HttpResponse> {
-    info!("{:?}", uid);
-    let user = User::new(1, "asako");
+pub async fn get_all_articles(pool: web::Data<Pool>) -> Result<HttpResponse> {
+    use crate::schema::articles::dsl;
+    let conn = pool.get().expect("Failed to get connection from Pool");
+    let all_articles = dsl::articles
+        .load::<Article>(&conn)
+        .expect("Error during loading article");
 
-    Ok(HttpResponse::Ok().json(user))
-}
-
-pub async fn get_all_articles(_pool: web::Data<Pool>) -> Result<HttpResponse> {
-    let article = Article::new(1, "asako", "turedure");
-
-    Ok(HttpResponse::Ok().json(article))
+    Ok(HttpResponse::Ok().json(all_articles))
 }
 
 pub async fn get_article_by_id(
-    _pool: web::Data<Pool>,
-    aid: web::Path<(i32,)>,
+    pool: web::Data<Pool>,
+    aid: web::Path<(i64,)>,
 ) -> Result<HttpResponse> {
-    info!("{:?}", aid.0);
-    println!("{}", aid.0);
-    let article = Article::new(1, "asako", "turedure");
+    use crate::schema::articles::dsl;
+    let conn = pool.get().expect("Failed to get connection from Pool");
+    let article = dsl::articles
+        .filter(dsl::id.eq(aid.0))
+        .load::<Article>(&conn)
+        .expect("Error during loading article");
 
     Ok(HttpResponse::Ok().json(article))
 }
