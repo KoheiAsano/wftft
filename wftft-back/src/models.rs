@@ -2,7 +2,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 // for response
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize, Queryable)]
 pub struct Article {
     pub id: i32,
     pub author: String,
@@ -22,7 +22,7 @@ impl<'a> Article {
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize, Queryable)]
 pub struct User {
     pub id: i32,
     pub name: String,
@@ -37,16 +37,16 @@ impl<'a> User {
 }
 
 // for requeset
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
-pub struct NewArticle {
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize)]
+pub struct RawArticle {
     pub author: String,
     pub created: Option<DateTime<Utc>>,
     pub content: String,
     pub published: bool,
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
-pub struct NewUser {
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize)]
+pub struct RawUser {
     pub id: i32,
     pub name: String,
 }
