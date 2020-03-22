@@ -5,7 +5,7 @@ Wiki For The First Time
 ```
 users {
     uid: int 
-    nickname: string
+    name: string
 }
 
 articles {
@@ -126,7 +126,7 @@ articles {
 
 ```json
 {
-    "nickname": "asako",
+    "name": "asako",
 }
 ```
 
