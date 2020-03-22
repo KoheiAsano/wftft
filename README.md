@@ -158,6 +158,6 @@ curl localhost:3000/api/articles/111
 ```
 POST
 ```bash
-curl -X POST localhost:3000/api/write -H "Content-Type:application/json" -d "{\"author\":\"asako\", \"content\":\"ukiyoni\", \"published\":false}"
-curl -X POST localhost:3000/api/signin -H "Content-Type:application/json" -d "{\"name\":\"asako\", \"id\":123}"
+curl -X POST localhost:3000/api/write -v -H "Content-Type:application/json" -d "{\"author\":\"asako\", \"content\":\"ukiyoni\", \"published\":false}"
+curl -X POST localhost:3000/api/signin -v -H "Content-Type:application/json" -d "{\"name\":\"asako\", \"id\":123}"
 ```
