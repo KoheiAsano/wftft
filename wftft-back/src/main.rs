@@ -2,23 +2,23 @@
 extern crate log;
 #[macro_use]
 extern crate diesel;
-
 use actix_web::{web, App, HttpServer};
 use listenfd::ListenFd;
 use log::info;
 use simple_logger;
+use std::env;
 
 mod handlers;
 mod models;
 mod schema;
+pub(crate) type Pool = diesel::r2d2::Pool<diesel::r2d2::ConnectionManager<diesel::PgConnection>>;
 
-#[derive(Clone)]
-pub struct Pool {}
-
-impl Pool {
-    pub fn new() -> Pool {
-        Pool {}
-    }
+pub fn init_pool() -> Pool {
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set.");
+    let manager = diesel::r2d2::ConnectionManager::<diesel::PgConnection>::new(db_url);
+    diesel::r2d2::Pool::builder()
+        .build(manager)
+        .expect("Failed to create pool")
 }
 
 #[actix_rt::main]
@@ -31,7 +31,7 @@ async fn main() -> std::io::Result<()> {
     let mut listenfd = ListenFd::from_env();
     let mut server = HttpServer::new(|| {
         App::new()
-            .data(Pool::new())
+            .data(init_pool())
             .route("/api/users", web::get().to(handlers::get_all_users))
             .route(
                 "/api/users/{user_id}",
