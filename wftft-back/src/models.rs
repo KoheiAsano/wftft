@@ -1,4 +1,5 @@
-use chrono::{DateTime, Utc};
+use super::schema::*;
+use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 // for response
@@ -48,5 +49,21 @@ pub struct RawArticle {
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize)]
 pub struct RawUser {
     pub id: i32,
+    pub name: String,
+}
+
+// for insert
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Insertable)]
+#[table_name = "articles"]
+pub struct NewArticle {
+    pub author: String,
+    pub created: NaiveDateTime,
+    pub content: String,
+    pub published: bool,
+}
+
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Insertable)]
+#[table_name = "users"]
+pub struct NewUser {
     pub name: String,
 }
