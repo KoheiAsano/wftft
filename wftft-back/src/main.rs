@@ -1,12 +1,16 @@
-use actix_web::{web, App, HttpServer};
-use listenfd::ListenFd;
 #[macro_use]
 extern crate log;
+#[macro_use]
+extern crate diesel;
+
+use actix_web::{web, App, HttpServer};
+use listenfd::ListenFd;
 use log::info;
 use simple_logger;
 
 mod handlers;
 mod models;
+mod schema;
 
 #[derive(Clone)]
 pub struct Pool {}

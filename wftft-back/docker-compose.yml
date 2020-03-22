@@ -1,0 +1,15 @@
+postgres-data:
+    image: busybox
+    volumes:
+        - /var/lib/postgresql/wftft-data
+    container_name: wftft-db-data
+
+postgresql:
+    image: postgres
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+    ports:
+        - "5432:5432"
+    volumes_from: 
+        - postgres-data

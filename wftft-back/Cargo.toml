@@ -1,0 +1,27 @@
+[package]
+name = "wftft-back"
+version = "0.1.0"
+authors = ["KoheiAsano <kk.asano.luxy@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+serde = { version = "1.0", features = ["derive"] }
+chrono = { version = "0.4.11", features = ["serde"] }
+dotenv = "0.15"
+# log
+log = "0.4"
+simple_logger = "1.6"
+
+# debug
+listenfd = "0.3"
+
+# server
+actix-web = "2.0"
+actix-rt = "1.0"
+
+# DB
+diesel = {version ="1.4", features = ["postgres", "r2d2"] }
+r2d2 = "0.8"

@@ -1,0 +1,17 @@
+-- Your SQL goes here
+CREATE TABLE articles
+(
+    id BIGSERIAL NOT NULL,
+    author VARCHAR NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    content VARCHAR NOT NULL,
+    published BOOLEAN NOT NULL DEFAULT 'f',
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE users
+(
+    id BIGSERIAL NOT NULL,
+    name VARCHAR NOT NULL,
+    PRIMARY KEY (id)
+);

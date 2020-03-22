@@ -21,6 +21,7 @@ impl<'a> Article {
         }
     }
 }
+
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize)]
 pub struct User {
     pub id: i32,
