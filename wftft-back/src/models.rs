@@ -11,31 +11,31 @@ pub struct Article {
     pub content: String,
     pub published: bool,
 }
-impl<'a> Article {
-    pub fn new(id: i64, author: &'a str, content: &'a str) -> Article {
-        Article {
-            id,
-            author: String::from(author),
-            created: NaiveDateTime::from_timestamp(Utc::now().timestamp(), 0),
-            content: String::from(content),
-            published: false,
-        }
-    }
-}
+// impl<'a> Article {
+//     pub fn new(id: i64, author: &'a str, content: &'a str) -> Article {
+//         Article {
+//             id,
+//             author: String::from(author),
+//             created: NaiveDateTime::from_timestamp(Utc::now().timestamp(), 0),
+//             content: String::from(content),
+//             published: false,
+//         }
+//     }
+// }
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize, Serialize, Queryable)]
 pub struct User {
     pub id: i64,
     pub name: String,
 }
-impl<'a> User {
-    pub fn new(id: i64, name: &'a str) -> User {
-        User {
-            id,
-            name: String::from(name),
-        }
-    }
-}
+// impl<'a> User {
+//     pub fn new(id: i64, name: &'a str) -> User {
+//         User {
+//             id,
+//             name: String::from(name),
+//         }
+//     }
+// }
 
 // for requeset
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Deserialize)]
