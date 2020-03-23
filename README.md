@@ -160,5 +160,5 @@ POST
 ```bash
 curl -X POST localhost:3000/api/write -v -H "Content-Type:application/json" -d "{\"author\":\"asako\", \"content\":\"ukiyoni\", \"published\":false}"
 curl -X POST localhost:3000/api/signin -v -H "Content-Type:application/json" -d "{\"name\":\"asako\", \"id\":123}"
-psql wftft -h localhost -p 5432 -U test01
+psql wftft -h localhost -p 5432 -U postgres
 ```
