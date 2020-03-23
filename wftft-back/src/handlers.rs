@@ -1,8 +1,7 @@
 use super::db;
-use super::models::{Article, NewArticle, NewUser, RawArticle, RawUser, User};
+use super::models::{NewArticle, NewUser, RawArticle, RawUser};
 use super::Pool;
 use actix_web::{web, HttpResponse, Result};
-use diesel::prelude::*;
 use failure::Error;
 // GET
 pub async fn handle_get_all_users(pool: web::Data<Pool>) -> Result<HttpResponse, Error> {
