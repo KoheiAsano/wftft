@@ -1,15 +1,26 @@
-postgres-data:
-    image: busybox
-    volumes:
-        - /var/lib/postgresql/wftft-data
-    container_name: wftft-db-data
+version: "2.0"
+services: 
+    postgres-data:
+        image: busybox
+        volumes:
+            - /var/lib/postgresql/wftft-data
+        container_name: wftft-db-data
 
-postgresql:
-    image: postgres
-    environment:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: password
-    ports:
-        - "5432:5432"
-    volumes_from: 
-        - postgres-data
+    postgresql:
+        image: postgres
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+        ports:
+            - "5432:5432"
+        volumes_from: 
+            - postgres-data
+
+    # app:
+    #     build: .
+    #     environment:
+    #         - DATABASE_URL
+    #     ports:
+    #         - "3000:3000"
+    #     depends_on:
+    #         - postgresql
