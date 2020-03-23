@@ -9,6 +9,7 @@ use log::info;
 use simple_logger;
 use std::env;
 
+mod db;
 mod handlers;
 mod models;
 mod schema;
@@ -25,7 +26,6 @@ pub fn init_pool() -> Pool {
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
-    // ここは?が使えないどうして
     match simple_logger::init_with_level(log::Level::Info) {
         Ok(_) => info!("Started!"),
         Err(_) => panic!("logger error"),
@@ -34,18 +34,23 @@ async fn main() -> std::io::Result<()> {
     let mut server = HttpServer::new(|| {
         App::new()
             .data(init_pool())
-            .route("/api/users", web::get().to(handlers::get_all_users))
+            // GET
+            .route("/api/users", web::get().to(handlers::handle_get_all_users))
             .route(
                 "/api/users/{user_id}",
-                web::get().to(handlers::get_user_by_id),
+                web::get().to(handlers::handle_get_user_by_id),
             )
-            .route("/api/articles", web::get().to(handlers::get_all_articles))
+            .route(
+                "/api/articles",
+                web::get().to(handlers::handle_get_all_articles),
+            )
             .route(
                 "/api/articles/{article_id}",
-                web::get().to(handlers::get_article_by_id),
+                web::get().to(handlers::handle_get_article_by_id),
             )
-            .route("/api/signin", web::post().to(handlers::register_user))
-            .route("/api/write", web::post().to(handlers::write_article))
+            // POST
+            .route("/api/signin", web::post().to(handlers::handle_post_user))
+            .route("/api/write", web::post().to(handlers::handle_post_article))
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {

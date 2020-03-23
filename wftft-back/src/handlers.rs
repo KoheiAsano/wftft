@@ -3,7 +3,7 @@ use super::Pool;
 use actix_web::{web, HttpResponse, Result};
 use diesel::prelude::*;
 // GET
-pub async fn get_all_users(pool: web::Data<Pool>) -> Result<HttpResponse> {
+pub async fn handle_get_all_users(pool: web::Data<Pool>) -> Result<HttpResponse> {
     use crate::schema::users::dsl;
     let conn = pool.get().expect("Failed to get connection from Pool");
     let all_users = dsl::users
@@ -13,7 +13,10 @@ pub async fn get_all_users(pool: web::Data<Pool>) -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(all_users))
 }
 
-pub async fn get_user_by_id(pool: web::Data<Pool>, uid: web::Path<(i64,)>) -> Result<HttpResponse> {
+pub async fn handle_get_user_by_id(
+    pool: web::Data<Pool>,
+    uid: web::Path<(i64,)>,
+) -> Result<HttpResponse> {
     use crate::schema::users::dsl;
     let conn = pool.get().expect("Failed to get connection from Pool");
     let user = dsl::users
@@ -24,7 +27,7 @@ pub async fn get_user_by_id(pool: web::Data<Pool>, uid: web::Path<(i64,)>) -> Re
     Ok(HttpResponse::Ok().json(user))
 }
 
-pub async fn get_all_articles(pool: web::Data<Pool>) -> Result<HttpResponse> {
+pub async fn handle_get_all_articles(pool: web::Data<Pool>) -> Result<HttpResponse> {
     use crate::schema::articles::dsl;
     let conn = pool.get().expect("Failed to get connection from Pool");
     let all_articles = dsl::articles
@@ -34,7 +37,7 @@ pub async fn get_all_articles(pool: web::Data<Pool>) -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json(all_articles))
 }
 
-pub async fn get_article_by_id(
+pub async fn handle_get_article_by_id(
     pool: web::Data<Pool>,
     aid: web::Path<(i64,)>,
 ) -> Result<HttpResponse> {
@@ -49,7 +52,10 @@ pub async fn get_article_by_id(
 }
 
 // POST
-pub async fn register_user(pool: web::Data<Pool>, raw: web::Json<RawUser>) -> Result<HttpResponse> {
+pub async fn handle_post_user(
+    pool: web::Data<Pool>,
+    raw: web::Json<RawUser>,
+) -> Result<HttpResponse> {
     let conn = pool.get().expect("Failed to get connection from Pool");
     use crate::schema::users::dsl;
     let new = NewUser {
@@ -65,7 +71,7 @@ pub async fn register_user(pool: web::Data<Pool>, raw: web::Json<RawUser>) -> Re
     Ok(HttpResponse::Accepted().finish())
 }
 
-pub async fn write_article<'a>(
+pub async fn handle_post_article<'a>(
     pool: web::Data<Pool>,
     raw: web::Json<RawArticle>,
 ) -> Result<HttpResponse> {
